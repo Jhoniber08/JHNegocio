@@ -8,6 +8,7 @@
              Title="{Binding Titulo}">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Multimedia" Command="{Binding MultimediaCommand}" />
         <ToolbarItem Text="Servidor" Command="{Binding CambiarServidorCommand}" />
         <ToolbarItem Text="Actualizar" Command="{Binding CargarCommand}" />
     </ContentPage.ToolbarItems>

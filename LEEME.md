@@ -81,3 +81,12 @@ JHNegocio.sln
 ### D. Evidencia extra: prueba automática de la API
 Pestaña **Actions** → **Probar API JH Negocio** → **Run workflow**.
 El log muestra cada petición (GET, POST, DELETE) con su código HTTP y el JSON de respuesta.
+
+---
+
+## Unidad 2 · Actividad 2 — Reproducir multimedia
+Pantalla **Multimedia** (botón en la barra superior del inventario) con `MediaElement` del .NET MAUI Community Toolkit:
+- `Resources/Raw/promo_jhnegocio.mp4`: video promocional original (20 s, H.264 + AAC).
+- `Resources/Raw/jingle_jhnegocio.mp3`: jingle original (18 s).
+- Controles: reproducir/pausar, detener, barra de progreso con búsqueda, volumen y estado.
+- No necesita la API: los archivos van dentro del APK.

@@ -20,7 +20,7 @@
     <!-- Windows sin empaquetar (se ejecuta directo con F5) -->
     <WindowsPackageType>None</WindowsPackageType>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
@@ -28,10 +28,15 @@
   <ItemGroup>
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#0B1020" />
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#0B1020" BaseSize="128,128" />
+    <MauiImage Include="Resources\Images\*" />
+    <!-- Archivos multimedia (video y audio) que se empaquetan dentro de la app -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <!-- MediaElement: control oficial del Community Toolkit para reproducir video y audio -->
+    <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="9.*" />
   </ItemGroup>
 
 </Project>

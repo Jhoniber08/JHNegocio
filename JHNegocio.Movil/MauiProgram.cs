@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui;
 using JHNegocio.Movil.Services;
 using JHNegocio.Movil.ViewModels;
 using JHNegocio.Movil.Views;
@@ -9,7 +10,10 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>();
+        builder
+            .UseMauiApp<App>()
+            // Inicializa MediaElement (false = sin servicio en segundo plano en Android)
+            .UseMauiCommunityToolkitMediaElement(false);
 
         // HttpClient apuntando a la API REST de JH Negocio
         // (la URL se toma de ApiConfig en cada llamada)
@@ -26,6 +30,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ProductosPage>();
         builder.Services.AddTransient<NuevoProductoViewModel>();
         builder.Services.AddTransient<NuevoProductoPage>();
+        builder.Services.AddTransient<MultimediaPage>();
 
         return builder.Build();
     }

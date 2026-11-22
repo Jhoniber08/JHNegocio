@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="JHNegocio.Movil.Views.MultimediaPage"
+             Title="Multimedia">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+
+            <!-- Encabezado -->
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Centro multimedia" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Acento}" />
+                <Label Text="Reproducción de video y audio con MediaElement" Style="{StaticResource Subtitulo}" />
+            </VerticalStackLayout>
+
+            <!-- Selector de recurso -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button x:Name="BtnVideo" Grid.Column="0" Text="▶  Video promocional" Clicked="OnVideoClicked" />
+                <Button x:Name="BtnAudio" Grid.Column="1" Text="♪  Jingle de audio" Clicked="OnAudioClicked" />
+            </Grid>
+
+            <!-- Reproductor -->
+            <Grid HeightRequest="215" BackgroundColor="Black">
+                <toolkit:MediaElement x:Name="player"
+                                      Source="embed://promo_jhnegocio.mp4"
+                                      ShouldAutoPlay="False"
+                                      ShouldShowPlaybackControls="True"
+                                      Aspect="AspectFit"
+                                      Volume="0.8" />
+                <!-- Portada que se muestra cuando se reproduce el audio -->
+                <Image x:Name="Portada" Source="portada_jingle.png" Aspect="AspectFit" IsVisible="False" />
+            </Grid>
+
+            <VerticalStackLayout Spacing="2">
+                <Label x:Name="LblTitulo" Text="Video promocional JH Negocio" FontSize="18" FontAttributes="Bold" />
+                <Label x:Name="LblDescripcion" Text="Presentación de la app · MP4 (H.264 + AAC)" Style="{StaticResource Subtitulo}" />
+            </VerticalStackLayout>
+
+            <!-- Controles personalizados -->
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                        <Label x:Name="LblPosicion" Grid.Column="0" Text="00:00" FontFamily="monospace" VerticalOptions="Center" />
+                        <Slider x:Name="SliderProgreso" Grid.Column="1" Minimum="0" Maximum="1"
+                                MinimumTrackColor="{StaticResource Acento}"
+                                MaximumTrackColor="{StaticResource TarjetaBorde}"
+                                ThumbColor="{StaticResource Acento}"
+                                DragStarted="OnDragStarted" DragCompleted="OnDragCompleted" />
+                        <Label x:Name="LblDuracion" Grid.Column="2" Text="00:00" FontFamily="monospace" VerticalOptions="Center" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="2*,*" ColumnSpacing="10">
+                        <Button x:Name="BtnPlay" Grid.Column="0" Text="▶  Reproducir" Clicked="OnPlayPauseClicked" />
+                        <Button Grid.Column="1" Text="■  Detener" Style="{StaticResource BotonSecundario}" Clicked="OnStopClicked" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Label Text="Volumen" Style="{StaticResource Subtitulo}" VerticalOptions="Center" />
+                        <Slider Grid.Column="1" Minimum="0" Maximum="1"
+                                Value="{Binding Volume, Source={x:Reference player}, Mode=TwoWay}"
+                                MinimumTrackColor="{StaticResource AcentoSecundario}"
+                                ThumbColor="{StaticResource AcentoSecundario}" />
+                    </Grid>
+
+                    <HorizontalStackLayout Spacing="8">
+                        <BoxView x:Name="PuntoEstado" Color="{StaticResource TextoSuave}" WidthRequest="10" HeightRequest="10" CornerRadius="5" VerticalOptions="Center" />
+                        <Label x:Name="LblEstado" Text="Estado: listo" />
+                    </HorizontalStackLayout>
+
+                    <Label x:Name="LblFuente" Text="Fuente: embed://promo_jhnegocio.mp4"
+                           Style="{StaticResource Subtitulo}" FontFamily="monospace" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

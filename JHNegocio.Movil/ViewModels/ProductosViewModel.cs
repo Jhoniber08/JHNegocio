@@ -28,6 +28,7 @@ public class ProductosViewModel : BaseViewModel
         AgregarCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(NuevoProductoPage)));
         EliminarCommand = new Command<Producto>(async p => await EliminarAsync(p));
         CambiarServidorCommand = new Command(async () => await CambiarServidorAsync());
+        MultimediaCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(MultimediaPage)));
     }
 
     public ObservableCollection<Producto> Productos { get; } = new();
@@ -37,6 +38,7 @@ public class ProductosViewModel : BaseViewModel
     public ICommand AgregarCommand { get; }
     public ICommand EliminarCommand { get; }
     public ICommand CambiarServidorCommand { get; }
+    public ICommand MultimediaCommand { get; }
 
     public string TextoBusqueda { get => _textoBusqueda; set => SetProperty(ref _textoBusqueda, value); }
     public bool EstaRefrescando { get => _estaRefrescando; set => SetProperty(ref _estaRefrescando, value); }

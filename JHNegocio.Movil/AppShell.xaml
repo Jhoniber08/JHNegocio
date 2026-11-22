@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:JHNegocio.Movil.Views"
+       x:Class="JHNegocio.Movil.AppShell"
+       Title="JH Negocio"
+       Shell.FlyoutBehavior="Disabled"
+       Shell.BackgroundColor="{StaticResource Fondo}"
+       Shell.ForegroundColor="{StaticResource Acento}"
+       Shell.TitleColor="{StaticResource Texto}">
+
+    <ShellContent Title="Inventario"
+                  Route="productos"
+                  ContentTemplate="{DataTemplate views:ProductosPage}" />
+
+</Shell>

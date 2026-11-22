@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:JHNegocio.Movil.ViewModels"
+             x:Class="JHNegocio.Movil.Views.NuevoProductoPage"
+             x:DataType="vm:NuevoProductoViewModel"
+             Title="{Binding Titulo}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+
+            <Label Text="Registrar producto" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Acento}" />
+            <Label Text="Se enviará a la API con POST /api/productos" Style="{StaticResource Subtitulo}" />
+
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Código" Style="{StaticResource Subtitulo}" />
+                    <Entry Text="{Binding Codigo}" Placeholder="Ej. COL-008" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Nombre" Style="{StaticResource Subtitulo}" />
+                    <Entry Text="{Binding Nombre}" Placeholder="Ej. Pasta spaghetti 1 lb" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Categoría" Style="{StaticResource Subtitulo}" />
+                    <Entry Text="{Binding Categoria}" Placeholder="Ej. Pastas" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Border Grid.Column="0" Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Precio (RD$)" Style="{StaticResource Subtitulo}" />
+                        <Entry Text="{Binding Precio}" Placeholder="0.00" Keyboard="Numeric" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Cantidad" Style="{StaticResource Subtitulo}" />
+                        <Entry Text="{Binding Cantidad}" Placeholder="0" Keyboard="Numeric" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <ActivityIndicator IsRunning="{Binding EstaOcupado}" IsVisible="{Binding EstaOcupado}" />
+
+            <Button Text="Guardar en la API" Command="{Binding GuardarCommand}" IsEnabled="{Binding NoEstaOcupado}" />
+            <Button Text="Cancelar" Style="{StaticResource BotonSecundario}" Command="{Binding CancelarCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

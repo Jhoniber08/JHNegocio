@@ -1,0 +1,46 @@
+# Compila la app .NET MAUI y genera el APK de Android para instalar en el celular
+name: Compilar APK JH Negocio
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths: [ 'JHNegocio.Movil/**', '.github/workflows/apk-android.yml' ]
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+
+      - name: Instalar carga de trabajo MAUI Android
+        run: dotnet workload install maui-android
+
+      - name: Instalar dependencias del SDK de Android
+        run: >
+          dotnet build JHNegocio.Movil/JHNegocio.Movil.csproj
+          -t:InstallAndroidDependencies -f net10.0-android
+          -p:AndroidSdkDirectory=$ANDROID_HOME
+          -p:AcceptAndroidSDKLicenses=True
+
+      - name: Publicar APK
+        run: >
+          dotnet publish JHNegocio.Movil/JHNegocio.Movil.csproj
+          -f net10.0-android -c Release
+          -p:AndroidPackageFormats=apk
+          -p:AndroidSdkDirectory=$ANDROID_HOME
+
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: JHNegocio-APK
+          path: JHNegocio.Movil/bin/Release/net10.0-android/publish/*-Signed.apk

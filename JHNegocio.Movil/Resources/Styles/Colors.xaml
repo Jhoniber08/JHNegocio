@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Paleta futurista de JH Negocio -->
+    <Color x:Key="Fondo">#0B1020</Color>
+    <Color x:Key="Tarjeta">#141B34</Color>
+    <Color x:Key="TarjetaBorde">#26305A</Color>
+    <Color x:Key="Acento">#00E5FF</Color>
+    <Color x:Key="AcentoSecundario">#7C4DFF</Color>
+    <Color x:Key="Texto">#FFFFFF</Color>
+    <Color x:Key="TextoSuave">#9AA4C7</Color>
+    <Color x:Key="Exito">#00E676</Color>
+    <Color x:Key="Alerta">#FFB300</Color>
+    <Color x:Key="Peligro">#FF5252</Color>
+
+</ResourceDictionary>

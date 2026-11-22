@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:JHNegocio.Movil.ViewModels"
+             xmlns:models="clr-namespace:JHNegocio.Movil.Models"
+             x:Class="JHNegocio.Movil.Views.ProductosPage"
+             x:DataType="vm:ProductosViewModel"
+             Title="{Binding Titulo}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Servidor" Command="{Binding CambiarServidorCommand}" />
+        <ToolbarItem Text="Actualizar" Command="{Binding CargarCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Padding="16,12" RowSpacing="12">
+
+        <!-- Encabezado y estado de conexión con la API -->
+        <VerticalStackLayout Grid.Row="0" Spacing="4">
+            <Label Text="JH Negocio" FontSize="26" FontAttributes="Bold" TextColor="{StaticResource Acento}" />
+            <HorizontalStackLayout Spacing="6">
+                <BoxView Color="{Binding ColorEstado}" WidthRequest="10" HeightRequest="10" CornerRadius="5" VerticalOptions="Center" />
+                <Label Text="{Binding EstadoConexion}" Style="{StaticResource Subtitulo}" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding UrlApi, StringFormat='GET {0}'}" Style="{StaticResource Subtitulo}" FontFamily="monospace" />
+        </VerticalStackLayout>
+
+        <!-- Resumen (GET /api/productos/resumen) -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*" ColumnSpacing="10">
+            <Border Grid.Column="0" Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout>
+                    <Label Text="Productos" Style="{StaticResource Subtitulo}" />
+                    <Label Text="{Binding TotalProductos}" FontSize="22" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="1" Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout>
+                    <Label Text="Valor" Style="{StaticResource Subtitulo}" />
+                    <Label Text="{Binding ValorInventario, StringFormat='RD$ {0:N0}'}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Exito}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout>
+                    <Label Text="Stock bajo" Style="{StaticResource Subtitulo}" />
+                    <Label Text="{Binding StockBajo}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Alerta}" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Búsqueda (GET /api/productos?buscar=) -->
+        <SearchBar Grid.Row="2"
+                   Placeholder="Buscar por nombre, código o categoría"
+                   Text="{Binding TextoBusqueda}"
+                   SearchCommand="{Binding BuscarCommand}" />
+
+        <!-- Lista de productos que llegan de la API -->
+        <RefreshView Grid.Row="3"
+                     Command="{Binding CargarCommand}"
+                     IsRefreshing="{Binding EstaRefrescando}"
+                     RefreshColor="{StaticResource Acento}">
+            <CollectionView ItemsSource="{Binding Productos}" SelectionMode="None">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="30" Spacing="8" HorizontalOptions="Center">
+                        <Label Text="Sin productos" FontSize="18" HorizontalOptions="Center" />
+                        <Label Text="Desliza hacia abajo para consultar la API" Style="{StaticResource Subtitulo}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Producto">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Eliminar"
+                                               BackgroundColor="{StaticResource Peligro}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductosViewModel}}, Path=EliminarCommand}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Border Style="{StaticResource Tarjeta}">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="2">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="16" FontAttributes="Bold" />
+                                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Subtitulo}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Codigo}" TextColor="{StaticResource Acento}" />
+                                                <Span Text="  ·  " />
+                                                <Span Text="{Binding Categoria}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Grid.Row="2" Grid.Column="0" Text="{Binding CantidadTexto}" Style="{StaticResource Subtitulo}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding StockBajo}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource Alerta}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"
+                                           Text="{Binding PrecioTexto}"
+                                           FontSize="16" FontAttributes="Bold"
+                                           TextColor="{StaticResource Exito}"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Indicador de carga y botón para agregar (POST) -->
+        <Grid Grid.Row="4" ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <ActivityIndicator Grid.Column="0" IsRunning="{Binding EstaOcupado}" IsVisible="{Binding EstaOcupado}" VerticalOptions="Center" />
+            <Button Grid.Column="1" Text="+ Agregar producto" Command="{Binding AgregarCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

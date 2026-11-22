@@ -1,0 +1,41 @@
+### Pruebas de JH Negocio API (clic en "Send request" en Visual Studio)
+@base = http://localhost:5080
+
+### 1. Listar productos
+GET {{base}}/api/productos
+
+### 2. Buscar productos
+GET {{base}}/api/productos?buscar=arroz
+
+### 3. Obtener un producto por Id
+GET {{base}}/api/productos/1
+
+### 4. Resumen del inventario
+GET {{base}}/api/productos/resumen
+
+### 5. Crear producto
+POST {{base}}/api/productos
+Content-Type: application/json
+
+{
+  "codigo": "COL-008",
+  "nombre": "Pasta spaghetti 1 lb",
+  "categoria": "Pastas",
+  "precio": 60,
+  "cantidad": 25
+}
+
+### 6. Actualizar producto
+PUT {{base}}/api/productos/1
+Content-Type: application/json
+
+{
+  "codigo": "COL-001",
+  "nombre": "Arroz selecto 10 lb",
+  "categoria": "Granos",
+  "precio": 465,
+  "cantidad": 20
+}
+
+### 7. Eliminar producto
+DELETE {{base}}/api/productos/7

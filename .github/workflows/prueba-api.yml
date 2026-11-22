@@ -1,0 +1,44 @@
+# Compila y ejecuta la API, y prueba cada endpoint (evidencia en el log)
+name: Probar API JH Negocio
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths: [ 'JHNegocio.Api/**', '.github/workflows/prueba-api.yml' ]
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Compilar API
+        run: dotnet build JHNegocio.Api/JHNegocio.Api.csproj -c Release
+
+      - name: Ejecutar API en segundo plano
+        run: |
+          dotnet run --project JHNegocio.Api/JHNegocio.Api.csproj -c Release --no-build --urls http://localhost:5080 &
+          for i in $(seq 1 30); do curl -s http://localhost:5080/api/productos > /dev/null && break; sleep 2; done
+
+      - name: GET /api/productos
+        run: curl -s -i http://localhost:5080/api/productos
+
+      - name: GET /api/productos/resumen
+        run: curl -s -i http://localhost:5080/api/productos/resumen
+
+      - name: POST /api/productos
+        run: |
+          curl -s -i -X POST http://localhost:5080/api/productos \
+            -H "Content-Type: application/json" \
+            -d '{"codigo":"COL-008","nombre":"Pasta spaghetti 1 lb","categoria":"Pastas","precio":60,"cantidad":25}'
+
+      - name: GET /api/productos/8 (producto recién creado)
+        run: curl -s -i http://localhost:5080/api/productos/8
+
+      - name: DELETE /api/productos/8
+        run: curl -s -i -X DELETE http://localhost:5080/api/productos/8

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource Fondo}" />
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource Texto}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="Subtitulo" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextoSuave}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style x:Key="Tarjeta" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource Tarjeta}" />
+        <Setter Property="Stroke" Value="{StaticResource TarjetaBorde}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="Padding" Value="14" />
+    </Style>
+
+    <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource Texto}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextoSuave}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <Style TargetType="SearchBar">
+        <Setter Property="TextColor" Value="{StaticResource Texto}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextoSuave}" />
+        <Setter Property="CancelButtonColor" Value="{StaticResource Acento}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Tarjeta}" />
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Acento}" />
+        <Setter Property="TextColor" Value="{StaticResource Fondo}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+
+    <Style x:Key="BotonSecundario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSuave}" />
+        <Setter Property="BorderColor" Value="{StaticResource TarjetaBorde}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Color" Value="{StaticResource Acento}" />
+    </Style>
+
+</ResourceDictionary>
